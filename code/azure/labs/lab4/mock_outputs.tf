@@ -27,3 +27,8 @@ output "mock_subnet_list" {
   description = "A mocked list of subnets that would be created based on high availability."
 }
 
+# Example of conditional logic using a ternary operator
+output "mock_database_creation" {
+  value = var.create_database ? "A mock database will be created for this environment." : "No database needed for this environment."
+  description = "A message indicating if mock database is enabled or disabled."
+}

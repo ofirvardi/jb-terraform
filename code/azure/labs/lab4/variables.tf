@@ -9,3 +9,9 @@ variable "high_availability" {
   type        = bool
   default     = true
 }
+
+variable "create_database" {
+  description = "mock database should be created"
+  type        = bool
+  default     = true
+}
