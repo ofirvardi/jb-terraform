@@ -57,6 +57,9 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
+variable "env" {
+  default = "prod"
+}
 
 variable "vm_size" {
   default = "Standard_B1ms"
@@ -104,6 +107,9 @@ resource "time_sleep" "wait_for_ip" {
 }
 
 resource "null_resource" "validate_ip" {
+  triggers = {
+    env = "prod"
+  }
   provisioner "local-exec" {
         command = <<EOT
       if [ -z "${azurerm_public_ip.pip.ip_address}" ]; then
@@ -113,6 +119,7 @@ resource "null_resource" "validate_ip" {
     EOT
   }
 depends_on = [azurerm_public_ip.pip, time_sleep.wait_for_ip]
+
 }
 
 output "vm_public_ip" {
