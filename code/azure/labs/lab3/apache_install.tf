@@ -7,11 +7,6 @@ resource "null_resource" "provision_apache" {
   triggers = {
     always_run = timestamp()
   }
-
-
-
-
-
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
