@@ -12,7 +12,7 @@ resource "null_resource" "provision_apache" {
     inline = [
       "sudo apt update",
       "sudo apt install -y apache2",
-      "echo '<h1>Welcome to \"${azurerm_linux_virtual_machine.vm.computer_name}\" Web Server!</h1>' | sudo tee /var/www/html/welcome.html",
+      "echo '<h1>Welcome to \"${azurerm_linux_virtual_machine.vm.computer_name}\" Web Server for jb!</h1>' | sudo tee /var/www/html/welcome.html",
       "sudo systemctl start apache2",
       "sudo systemctl enable apache2"
     ]
