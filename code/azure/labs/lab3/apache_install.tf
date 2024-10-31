@@ -8,11 +8,15 @@ resource "null_resource" "provision_apache" {
     always_run = timestamp()
   }
 
+
+
+
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
       "sudo apt install -y apache2",
-      "echo '<h1>Welcome to \"${azurerm_linux_virtual_machine.vm.computer_name}\" Web Server for jb!</h1>' | sudo tee /var/www/html/welcome.html",
+      "echo '<h1>Welcome to \"${data.azurerm_virtual_machine.computer_name.name}\" Web Server for jb!</h1>' | sudo tee /var/www/html/welcome.html",
       "sudo systemctl start apache2",
       "sudo systemctl enable apache2"
     ]
@@ -26,7 +30,16 @@ resource "null_resource" "provision_apache" {
     }
   }
 }
+# Define a data source to fetch an existing Azure Public IP
+  data "azurerm_virtual_machine" "computer_name" {
+    name                = "vm-yanivc"
+    resource_group_name = "rg-yanic"
+  }
 
+# Reference the IP address later in the configuration
+  output "yanicmac" {
+    value = data.azurerm_virtual_machine.computer_name
+  }
 # Updated Output for Server Information to use data source
 output "server_info" {
   value       = "Please browse: http://${data.azurerm_public_ip.example.ip_address}/welcome.html"
